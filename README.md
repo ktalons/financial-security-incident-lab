@@ -284,7 +284,7 @@ Reconstructs the incident chronologically and distinguishes baseline behavior fr
 
 ### Evidence Assessment
 
-[`investigation/evidence.md`](investigation/evidence.md)
+> [`investigation/evidence.md`](investigation/evidence.md)
 
 Documents the evidence supporting the incident classification and explains how confidence changes when multiple findings are correlated.
 
