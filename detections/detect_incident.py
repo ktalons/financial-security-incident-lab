@@ -93,10 +93,12 @@ def detect_password_spray(events: list[dict]) -> list[dict]:
     findings = []
 
     for source_ip, failures in failures_by_source.items():
-        unique_users = {
-            nested_get(event, "user", "email")
-            for event in failures
-        }
+        unique_users: set[str] = set()
+
+        for event in failures:
+            user_email = nested_get(event, "user", "email")
+            if isinstance(user_email, str):
+                unique_users.add(user_email)
 
         if len(unique_users) >= PASSWORD_SPRAY_THRESHOLD:
             findings.append(
@@ -162,7 +164,7 @@ def detect_external_forwarding(events: list[dict]) -> list[dict]:
         forward_to = nested_get(event, "mailbox", "forward_to")
         source_ip = nested_get(event, "source", "ip")
 
-        if not user or not forward_to:
+        if not isinstance(user, str) or not isinstance(forward_to, str):
             continue
 
         user_domain = user.split("@")[-1].lower()
@@ -223,7 +225,8 @@ def detect_suspicious_email(events: list[dict]) -> list[dict]:
         if action != EMAIL_SENT_ACTION:
             continue
 
-        subject = nested_get(event, "email", "subject") or ""
+        subject_value = nested_get(event, "email", "subject")
+        subject = subject_value if isinstance(subject_value, str) else ""
 
         if "payment" not in subject.lower():
             continue
