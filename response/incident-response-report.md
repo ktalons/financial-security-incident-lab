@@ -33,13 +33,15 @@ The incident began with password-spray activity originating from:
 
 `203.0.113.50`
 
-The source generated failed authentication attempts against five unique identities.
+<sub>The source generated failed authentication attempts against five unique identities.</sub>
+
+---
 
 The activity was followed by successful authentication to:
 
 `j.smith@summitcu.example` from the same source.
 
-This sequence is consistent with credential compromise following password spraying.
+<sub>This sequence is consistent with credential compromise following password spraying.</sub>
 
 ---
 
@@ -47,13 +49,17 @@ This sequence is consistent with credential compromise following password sprayi
 
 Following successful authentication, the affected account demonstrated three significant behaviors.
 
+---
+
 ### External Mail Forwarding
 
 Mail was configured to forward externally to:
 
 `collections@external-mail.example`
 
-This could provide continued access to communications and potentially expose sensitive information.
+<sub>This could provide continued access to communications and potentially expose sensitive information.</sub>
+
+---
 
 ### Inbox Concealment
 
@@ -61,7 +67,9 @@ An inbox rule was created to move messages containing:
 
 `Payment` to deleted items.
 
-This behavior may indicate an attempt to conceal communications associated with fraudulent activity.
+<sub>This behavior may indicate an attempt to conceal communications associated with fraudulent activity.</sub>
+
+---
 
 ### Payment-Related Email
 
@@ -69,7 +77,7 @@ The compromised account sent a message titled:
 
 `Updated Payment Instructions` to internal financial recipients.
 
-This behavior is consistent with the simulated BEC scenario.
+<sub>This behavior is consistent with the simulated BEC scenario.</sub>
 
 ---
 
@@ -123,7 +131,7 @@ The current dataset does not establish whether:
 - Additional identities were compromised
 - Endpoint compromise occurred
 
-Additional telemetry would be required before the incident could be considered fully scoped.
+<sub>Additional telemetry would be required before the incident could be considered fully scoped.</sub>
 
 ---
 
@@ -139,7 +147,7 @@ Potential impact includes:
 - Reputational impact
 - Regulatory notification obligations
 
-The synthetic dataset does not confirm actual financial loss or sensitive-data exposure.
+<sub>The synthetic dataset does not confirm actual financial loss or sensitive-data exposure.</sub>
 
 ---
 
