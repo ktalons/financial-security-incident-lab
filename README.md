@@ -204,8 +204,6 @@ The Python detection engine produces five independent findings:
 
 > The project intentionally separates individual detections from incident correlation.
 
-<sub>A password spray alone does not prove account compromise. Likewise, a mailbox forwarding rule may have a legitimate explanation.</sub>
-
 Confidence increases substantially when the same source:
 
 1. Generates failed authentication against multiple identities.
