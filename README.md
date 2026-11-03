@@ -136,7 +136,7 @@ financial-security-incident-lab/
 |
 ├── screenshots/
 │   ├── generate_events.png
-│   ├── full_incident.png
+│   ├── detect_incident.png
 │   └── correlated_incident.png
 |
 ├── requirements.txt
@@ -236,7 +236,7 @@ high-confidence account takeover / BEC incident.
 
 ![Critical correlated incident](screenshots/correlated_incident.png)
 
-[View full detection output screenshot](screenshots/full_incident.png)
+[View full detection output screenshot](screenshots/detect_incident.png)
 
 ---
 
