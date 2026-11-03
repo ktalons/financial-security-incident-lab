@@ -34,7 +34,7 @@ Detection severity:
 
 **Medium**
 
-The password spray is suspicious independently but does not by itself confirm account compromise.
+> The password spray is suspicious independently but does not by itself confirm account compromise.
 
 ---
 
@@ -54,7 +54,7 @@ Detection severity:
 
 **High**
 
-This event significantly increases confidence that valid credentials were obtained.
+> This event significantly increases confidence that valid credentials were obtained.
 
 ---
 
@@ -70,7 +70,7 @@ Detection severity:
 
 **High**
 
-External mailbox forwarding may provide an attacker continued access to communications even after the original authentication session ends.
+> External mailbox forwarding may provide an attacker continued access to communications even after the original authentication session ends.
 
 ---
 
@@ -84,7 +84,7 @@ Detection severity:
 
 **High**
 
-The behavior is consistent with an attempt to conceal responses associated with fraudulent payment activity.
+> The behavior is consistent with an attempt to conceal responses associated with fraudulent payment activity.
 
 ---
 
@@ -103,7 +103,7 @@ Detection severity:
 
 **High**
 
-This behavior is consistent with a BEC scenario involving attempted manipulation of financial processes.
+> This behavior is consistent with a BEC scenario involving attempted manipulation of financial processes.
 
 ---
 
@@ -117,17 +117,15 @@ The detection engine correlated:
 
 into the following incident:
 
-**Type:** `account_takeover_bec`
-
-**Severity:** Critical
-
-**Confidence:** High
+```text
+Type: account_takeover_bec
+Severity: Critical
+Confidence: High
+```
 
 ### Correlation Rationale
 
-Each individual event has legitimate or ambiguous explanations when considered independently.
-
-The combination of authentication abuse, successful account access, and mailbox manipulation from the same source substantially increases confidence that account takeover occurred.
+> Each individual event has legitimate or ambiguous explanations when considered independently. The combination of authentication abuse, successful account access, and mailbox manipulation from the same source substantially increases confidence that account takeover occurred.
 
 ---
 
@@ -140,4 +138,4 @@ The following reserved resources are intentionally used:
 - `.example` domains
 - RFC 5737 documentation IP address ranges
 
-No production data, credentials, real users, or real financial institution infrastructure are represented.
+<sub>No production data, credentials, real users, or real financial institution infrastructure are represented.</sub>
