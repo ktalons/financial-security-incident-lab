@@ -302,18 +302,16 @@ git clone https://github.com/ktalons/financial-security-incident-lab.git
 cd financial-security-incident-lab
 ```
 
-### Create a Virtual Environment
+### Runtime
+
+The core lab uses Python 3 and the standard library only.
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
+> A virtual environment is optional but recommended for local development.
 
 ### Generate the Dataset
 
@@ -405,7 +403,6 @@ financial-security-incident-lab/
 │   ├── detect_incident.png
 │   └── correlated_incident.png
 │
-├── requirements.txt
 ├── .gitignore
 └── README.md
 ```
