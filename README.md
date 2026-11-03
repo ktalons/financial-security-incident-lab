@@ -1,68 +1,38 @@
 # Financial Security Incident Lab
 
-A synthetic financial-sector security lab demonstrating detection engineering, incident correlation, investigation, response, and cybersecurity risk communication through a simulated account takeover and Business Email Compromise (BEC) scenario.
+A synthetic financial-sector security lab demonstrating **detection engineering, incident correlation, investigation, response, and cybersecurity risk communication** through a simulated account takeover and Business Email Compromise (BEC) scenario.
 
-> **Safety:** All identities, domains, IP addresses, events, and organizations used in this project are fictional. No production systems, credentials, customer information, or real financial institution data are used.
+> **Safety:** All identities, domains, IP addresses, organizations, logs, and incident activity used in this project are fictional. No production systems, credentials, customer information, or real financial institution data are used.
 
 ---
 
-## Project Overview
+## Detection Result
 
-This project follows a simulated security incident from initial authentication abuse through detection, investigation, containment, and business-risk assessment.
+The lab generates a controlled account-takeover scenario, produces five independent security findings, and correlates related authentication and mailbox activity into a **critical, high-confidence BEC incident**.
 
-The scenario begins with password spraying against multiple fictional employee accounts. One targeted identity is successfully compromised and subsequently used to create external mailbox forwarding, conceal payment-related messages, and send updated payment instructions to internal financial personnel.
-
-Rather than treating each event as an isolated alert, the project correlates related activity to determine when multiple suspicious behaviors collectively support a high-confidence incident.
-
-### Scenario
+![Critical correlated incident](screenshots/correlated_incident.png)
 
 ```text
-Password Spray
-      |
-      v
-Successful Authentication
-      |
-      v
-Account Takeover
-      |
-      +--> External Mail Forwarding
-      |
-      +--> Suspicious Inbox Rule
-      |
-      +--> Payment-Related Email
-      |
-      v
-Detection Correlation
-      |
-      v
-Critical BEC Incident
-      |
-      +--> Investigation
-      +--> Containment
-      +--> Risk Assessment
-      +--> Regulatory Escalation Review
+Type:       account_takeover_bec
+Severity:   CRITICAL
+Confidence: HIGH
+User:       j.smith@summitcu.example
+Source IP:  203.0.113.50
 ```
+
+[View full detection output screenshot](screenshots/detect_incident.png)  
+[View raw detection output](docs/detection-output.txt)
 
 ---
 
-## Objectives
+## What This Project Demonstrates
 
-The project demonstrates the ability to:
-
-- Generate deterministic synthetic security telemetry.
-- Normalize events using ECS-style field structures.
-- Detect password-spray behavior across multiple identities.
-- Identify successful authentication following failed attempts.
-- Detect external mailbox forwarding.
-- Identify suspicious inbox-rule behavior.
-- Detect payment-related activity from a compromised account.
-- Correlate multiple independent findings into a higher-confidence incident.
-- Reconstruct an incident timeline.
-- Separate confirmed evidence from unverified impact.
-- Scope a security investigation.
-- Document containment and recovery actions.
-- Translate technical findings into business risk.
-- Identify potential regulatory considerations without making unsupported legal conclusions.
+- Synthetic ECS-style security telemetry generation
+- Password-spray and mailbox-rule detection engineering
+- Multi-event correlation into a high-confidence security incident
+- Timeline reconstruction, evidence analysis, and incident scoping
+- Containment and incident-response documentation
+- Translation of technical findings into business and regulatory risk
 
 ---
 
@@ -102,60 +72,57 @@ flowchart LR
 
 ---
 
-## Repository Structure
+## Scenario
+
+The simulated attack begins with **password spraying against multiple fictional employee identities**.
+
+One targeted identity is successfully authenticated from the same source and is subsequently used to:
+
+1. Create external mailbox forwarding
+2. Create an inbox rule designed to conceal payment-related messages
+3. Send updated payment instructions to internal financial personnel
+
+The project intentionally treats these behaviors as separate findings before correlating them into a higher-confidence incident.
 
 ```text
-financial-security-incident-lab/
-|
-├── data/
-│   └── incident-events.jsonl
-|
-├── generator/
-│   └── generate_events.py
-|
-├── detections/
-│   ├── detect_incident.py
-│   ├── password-spray.yml
-│   └── mailbox-forwarding-rule.yml
-|
-├── investigation/
-│   ├── timeline.md
-│   ├── evidence.md
-│   └── scope-analysis.md
-|
-├── response/
-│   ├── containment-checklist.md
-│   └── incident-response-report.md
-|
-├── risk/
-│   ├── executive-summary.md
-│   └── regulatory-escalation.md
-|
-├── docs/
-│   └── detection-output.txt
-|
-├── screenshots/
-│   ├── generate_events.png
-│   ├── detect_incident.png
-│   └── correlated_incident.png
-|
-├── requirements.txt
-├── .gitignore
-└── README.md
+Password Spray
+      |
+      v
+Successful Authentication
+      |
+      v
+Account Takeover
+      |
+      +--> External Mail Forwarding
+      |
+      +--> Suspicious Inbox Rule
+      |
+      +--> Payment-Related Email
+      |
+      v
+Detection Correlation
+      |
+      v
+Critical BEC Incident
+      |
+      +--> Investigation
+      +--> Containment
+      +--> Risk Assessment
+      +--> Regulatory Review
 ```
 
 ---
 
-## Synthetic Dataset
+## Synthetic Telemetry
 
-The event generator creates a deterministic 14-event incident timeline.
+The event generator creates a deterministic **14-event incident timeline** using fictional identities and documentation-only network resources.
 
 The dataset uses:
 
-- `.example` domains reserved for documentation.
-- RFC 5737 documentation-only IP address ranges.
-- Fictional users and organizational identifiers.
-- ECS-style nested fields such as:
+- `.example` domains
+- RFC 5737 documentation IP ranges
+- Fictional user identities
+- ECS-style nested fields including:
   - `event.action`
   - `event.outcome`
   - `event.dataset`
@@ -168,7 +135,9 @@ The dataset is stored as JSON Lines:
 data/incident-events.jsonl
 ```
 
-<sub>Each line represents one independent security event.</sub>
+Each line represents one independent security event.
+
+![Synthetic event generation](screenshots/generate_events.png)
 
 ---
 
@@ -176,87 +145,71 @@ data/incident-events.jsonl
 
 | Time UTC | Activity | Assessment |
 |---|---|---|
-| 15:00 | Normal authentication | Baseline user activity |
+| 15:00 | Normal authentication | Establishes baseline activity |
 | 15:14 | Password spray begins | Multiple identities targeted from one source |
 | 15:18 | `j.smith` targeted | Future compromised identity enters attack sequence |
-| 15:20 | Repeated failure against `j.smith` | Continued targeting |
+| 15:20 | Repeated authentication failure | Continued targeting |
 | 15:21 | Successful authentication | Potential valid-account compromise |
 | 15:27 | External forwarding created | BEC collection/persistence behavior |
 | 15:31 | Inbox concealment rule created | Payment-related messages hidden |
-| 15:42 | Updated payment instructions sent | Potential fraud activity |
+| 15:42 | Updated payment instructions sent | Potential fraudulent activity |
 | 15:47 | Correlation alert generated | Combined behavior escalated |
 | 15:57 | Sessions revoked | Containment begins |
 | 15:58 | Account disabled | Immediate unauthorized access stopped |
 
-> See [`investigation/timeline.md`](investigation/timeline.md) for the complete investigation timeline.
+See the full [`incident timeline`](investigation/timeline.md) for the complete reconstruction.
 
 ---
 
 ## Detection Engineering
 
-The Python detection engine produces five independent findings:
+The Python detection engine identifies five independent findings:
 
-1. Password Spray
-2. Successful Login After Failures
-3. External Mail Forwarding
-4. Suspicious Inbox Rule
-5. Suspicious Payment Email
+1. **Password Spray**
+2. **Successful Login After Failures**
+3. **External Mail Forwarding**
+4. **Suspicious Inbox Rule**
+5. **Suspicious Payment Email**
 
-> The project intentionally separates individual detections from incident correlation.
+A key design goal is to distinguish **suspicious events** from a **confirmed incident**.
 
-Confidence increases substantially when the same source:
+For example, failed authentication or mailbox forwarding may each have legitimate explanations when viewed independently.
 
-1. Generates failed authentication against multiple identities.
-2. Successfully authenticates to one of those identities.
-3. Creates external mailbox forwarding for the compromised account.
+Confidence increases when the same source:
 
-The correlation engine therefore raises:
+1. Fails authentication against multiple identities
+2. Successfully authenticates to one of those identities
+3. Creates external mailbox forwarding for the compromised account
+
+The correlation engine therefore escalates the combined behavior to:
 
 ```text
-Type:       account_takeover_bec
-Severity:   CRITICAL
+account_takeover_bec
+Severity: CRITICAL
 Confidence: HIGH
 ```
----
-
-### Synthetic Dataset
-
-The generator creates a deterministic 14-event incident timeline.
-
-![Synthetic event generation](screenshots/generate_events.png)
-
----
-
-### Detection Result
-
-The detection engine identifies five findings and correlates them into a
-high-confidence account takeover / BEC incident.
-
-![Critical correlated incident](screenshots/correlated_incident.png)
-
-[View full detection output screenshot](screenshots/detect_incident.png)
 
 ---
 
 ## Sigma Detection Rules
 
-Two Sigma-format detection artifacts are included:
+Two Sigma-format detection artifacts are included.
 
 ### Password Spray
 
 [`detections/password-spray.yml`](detections/password-spray.yml)
 
-The rule uses a `value_count` correlation to identify one source IP generating failed authentication against four or more distinct user identities within ten minutes.
+Uses a `value_count` correlation to identify failed authentication from one source IP against four or more distinct user identities within ten minutes.
 
 ### Mailbox Forwarding
 
 [`detections/mailbox-forwarding-rule.yml`](detections/mailbox-forwarding-rule.yml)
 
-The rule identifies creation of mailbox forwarding configuration for additional analyst review.
+Detects creation of mailbox forwarding configuration for additional analyst review.
 
-> The local Python detection engine performs additional context-aware analysis, including comparing the user's domain with the forwarding destination.
+The Python detection engine performs additional context-aware analysis, including comparing the mailbox owner's domain against the forwarding destination.
 
-<sub>> The Sigma rules use custom synthetic log sources and ECS-style fields. Production use would require field mapping appropriate to the target SIEM and telemetry source. Backend support for Sigma correlation features should also be validated before deployment.</sub>
+> **Note:** These Sigma rules use synthetic log sources and ECS-style fields. Production deployment would require appropriate field mapping for the target SIEM and validation of backend correlation support.
 
 ---
 
@@ -268,67 +221,30 @@ The rule identifies creation of mailbox forwarding configuration for additional 
 | Successful use of compromised credentials | T1078 - Valid Accounts | Initial Access / Persistence / Privilege Escalation / Defense Evasion |
 | External mailbox forwarding | T1114.003 - Email Forwarding Rule | Collection |
 
-<sub>The mapping focuses only on behaviors directly supported by the synthetic evidence rather than forcing every event into an ATT&CK technique.</sub>
+The mapping is intentionally limited to behavior directly supported by the synthetic evidence rather than assigning techniques simply to increase coverage.
 
 ---
 
-## Investigation
+## Investigation, Response & Risk
 
-The investigation stage documents three separate analyst concerns:
+The lab carries the correlated incident beyond alert generation into investigation, containment, and business-risk communication.
 
-### Timeline Reconstruction
+| Area | Artifact |
+|---|---|
+| Timeline Reconstruction | [`investigation/timeline.md`](investigation/timeline.md) |
+| Evidence Assessment | [`investigation/evidence.md`](investigation/evidence.md) |
+| Scope Analysis | [`investigation/scope-analysis.md`](investigation/scope-analysis.md) |
+| Containment Checklist | [`response/containment-checklist.md`](response/containment-checklist.md) |
+| Incident Response Report | [`response/incident-response-report.md`](response/incident-response-report.md) |
+| Executive Risk Summary | [`risk/executive-summary.md`](risk/executive-summary.md) |
+| Regulatory Escalation | [`risk/regulatory-escalation.md`](risk/regulatory-escalation.md) |
 
-> [`investigation/timeline.md`](investigation/timeline.md)
+The investigation intentionally distinguishes:
 
-Reconstructs the incident chronologically and distinguishes baseline behavior from attack and response activity.
-
-### Evidence Assessment
-
-> [`investigation/evidence.md`](investigation/evidence.md)
-
-Documents the evidence supporting the incident classification and explains how confidence changes when multiple findings are correlated.
-
-### Scope Analysis
-
-> [`investigation/scope-analysis.md`](investigation/scope-analysis.md)
-
-Separates confirmed compromise from unanswered investigative questions.
-
-<sub>The synthetic evidence confirms one compromised identity but does not assume that one confirmed account represents the full scope of the incident.</sub>
-
----
-
-## Incident Response
-
-> [`response/containment-checklist.md`](response/containment-checklist.md) separates confirmed response actions from additional recommended containment steps.
-
-The synthetic dataset confirms:
-
-- Active sessions were revoked.
-- The affected account was disabled.
-
-<sub>Additional investigation and containment would still be required before declaring the incident fully contained.</sub>
-
-> The complete incident report is available at: [`response/incident-response-report.md`](response/incident-response-report.md)
-
----
-
-## Risk Communication
-
-Detection is only one part of an analyst's responsibility.
-
-The project therefore translates technical evidence into:
-
-- Potential financial risk
-- Potential information exposure
-- Operational risk
-- Reputational risk
-- Management decision points
-- Residual risk
-
-> The executive-facing assessment is available at: [`risk/executive-summary.md`](risk/executive-summary.md)
-
-The report deliberately distinguishes potential impact from confirmed impact.
+- **Confirmed evidence**
+- **Potential impact**
+- **Unresolved scope**
+- **Recommended response actions**
 
 For example:
 
@@ -337,30 +253,47 @@ Potential Financial Impact: High
 Confirmed Financial Loss:   None identified
 ```
 
-<sub>This prevents uncertainty from being presented as established fact.</sub>
+This prevents possible impact from being presented as established fact.
+
+---
+
+## Incident Response
+
+The synthetic response telemetry confirms two immediate containment actions:
+
+- Active sessions were revoked
+- The affected account was disabled
+
+Those actions reduce immediate unauthorized access but do **not** establish that the incident is fully contained.
+
+Additional investigation would still be required to determine whether:
+
+- Other identities were compromised
+- Additional malicious sessions exist
+- Sensitive information was exposed
+- Fraudulent transactions occurred
+- Endpoint compromise or other persistence exists
 
 ---
 
 ## Regulatory Escalation
 
-The project includes a simulated regulatory-escalation assessment: [`risk/regulatory-escalation.md`](risk/regulatory-escalation.md)
+The project includes a simulated regulatory-escalation assessment to demonstrate how an analyst can identify potential reporting considerations without making unsupported legal conclusions.
 
-The analyst identifies facts, preserves evidence, documents uncertainty, and escalates potential regulatory implications to appropriate authorized personnel.
+The analyst's role is framed as:
 
-<sub>The project does not attempt to make a final legal or regulatory determination.</sub>
+1. Identify facts
+2. Preserve evidence
+3. Assess technical impact
+4. Document uncertainty
+5. Escalate potential regulatory implications
+6. Support authorized decision-makers with accurate incident information
+
+See [`risk/regulatory-escalation.md`](risk/regulatory-escalation.md).
 
 ---
 
 ## Quick Start
-
-### Requirements
-
-- Python 3
-- Git
-- PyYAML
-- pandas
-
-> The project was developed and tested using Python 3.15.
 
 ### Clone
 
@@ -388,7 +321,7 @@ pip install -r requirements.txt
 python generator/generate_events.py
 ```
 
-Expected result:
+Expected:
 
 ```text
 [+] Generated 14 synthetic events
@@ -401,54 +334,104 @@ Expected result:
 python detections/detect_incident.py
 ```
 
-<sub>The detector should identify five findings and correlate the authentication and mailbox activity into a critical, high-confidence account takeover/BEC scenario.</sub>
+Expected outcome:
+
+```text
+Detection finding count: 5
+
+Severity:   CRITICAL
+Confidence: HIGH
+Type:       account_takeover_bec
+```
 
 ---
 
 ## Detection Philosophy
 
-This lab is built around one principle:
-
-**A suspicious event is not automatically an incident.**
+> **A suspicious event is not automatically an incident.**
 
 - Individual alerts provide evidence.
 - Correlation provides context.
 - Investigation establishes scope.
 - Response reduces risk.
-- Documentation communicates what is known, what remains unknown, and what should happen next.
+- Documentation communicates what is known and what remains uncertain.
 
 ---
 
-## Lessons Learned
+## Key Takeaways
 
-### Telemetry quality matters
-
-Detection logic depends on reliable timestamps, consistent field naming, and trustworthy source data.
-
-### Correlation changes confidence
-
-A failed login or forwarding rule can have benign explanations. Their relationship to other events can transform their significance.
-
-### Scope should be evidence-driven
-
-One confirmed compromised identity does not prove that only one identity was compromised.
-
-### Containment is not recovery
-
-Disabling an account stops immediate access but does not establish that all persistence, exposed credentials, malicious sessions, or downstream impact have been addressed.
-
-### Technical findings must translate into risk
-
-A source IP and authentication event matter because of what they may allow an adversary to do to business processes, sensitive information, and financial operations.
-
-### Uncertainty should remain visible
-
-Potential impact should not be represented as confirmed impact without supporting evidence.
+- **Correlation changes confidence.** Individual alerts may be ambiguous; related activity provides stronger evidence.
+- **Scope must be evidence-driven.** One confirmed compromised identity does not prove that only one identity was affected.
+- **Containment is not recovery.** Disabling an account stops immediate access but does not establish that all persistence or downstream impact has been resolved.
+- **Technical findings must translate into risk.** Security telemetry matters because of what it may allow an adversary to do to business processes, financial operations, and sensitive information.
+- **Uncertainty should remain explicit.** Potential impact should never be represented as confirmed impact without supporting evidence.
 
 ---
 
-#### Disclaimer
+## Repository Structure
 
-<sup>This repository is an educational cybersecurity project.</sup>
-<sup>All organizations, identities, email addresses, IP addresses, logs, and incident activity are synthetic and intentionally fictional.</sup>
-<sup>The project is not affiliated with or representative of any real financial institution.</sup>
+```text
+financial-security-incident-lab/
+│
+├── data/
+│   └── incident-events.jsonl
+│
+├── generator/
+│   └── generate_events.py
+│
+├── detections/
+│   ├── detect_incident.py
+│   ├── password-spray.yml
+│   └── mailbox-forwarding-rule.yml
+│
+├── investigation/
+│   ├── timeline.md
+│   ├── evidence.md
+│   └── scope-analysis.md
+│
+├── response/
+│   ├── containment-checklist.md
+│   └── incident-response-report.md
+│
+├── risk/
+│   ├── executive-summary.md
+│   └── regulatory-escalation.md
+│
+├── docs/
+│   └── detection-output.txt
+│
+├── screenshots/
+│   ├── generate_events.png
+│   ├── detect_incident.png
+│   └── correlated_incident.png
+│
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
+
+---
+
+## Future Improvements
+
+Potential extensions include:
+
+- Elastic/Kibana ingestion and dashboards
+- Additional Sigma detections
+- MFA and conditional-access telemetry
+- Endpoint/EDR events
+- Threat-intelligence enrichment
+- Automated ATT&CK mapping
+- Detection unit tests
+- Additional BEC variants
+- Third-party compromise scenarios
+
+---
+
+## Disclaimer
+
+This repository is an educational cybersecurity project.
+
+All organizations, identities, email addresses, IP addresses, logs, and incident activity are synthetic and intentionally fictional.
+
+This project is not affiliated with or representative of any real financial institution.
