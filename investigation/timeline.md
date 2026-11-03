@@ -37,11 +37,11 @@ The event sequence is consistent with a simulated business email compromise init
 
 The strongest evidence is not any single event, but the correlation between:
 
-1. Failed authentication attempts against multiple users from one source.
-2. Successful authentication to one of the targeted accounts.
-3. Creation of external mailbox forwarding.
-4. Creation of a suspicious inbox rule.
+1. Failed authentication attempts against multiple users from **one source**.
+2. **Successful** authentication to one of the **targeted accounts**.
+3. Creation of **external mailbox forwarding**.
+4. Creation of a **suspicious inbox rule**.
 5. Transmission of a payment-related email.
-6. Activity originating from the same suspicious source IP.
+6. Activity originating from the **same suspicious source IP**.
 
 Together, these events provide high confidence that the affected account was compromised and used for BEC-related activity.
