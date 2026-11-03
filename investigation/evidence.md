@@ -78,9 +78,7 @@ External mailbox forwarding may provide an attacker continued access to communic
 
 A mailbox rule was created to move messages containing:
 
-`Payment`
-
-to deleted items.
+`Payment` to deleted items.
 
 Detection severity:
 
