@@ -1,0 +1,78 @@
+[+] Loaded 14 synthetic events
+
+========================================================================
+* FINANCIAL SECURITY INCIDENT LAB * DETECTION RESULTS *
+========================================================================
+
+[+] Detection finding count: 5
+
+--- Password Spray ---
+{
+  "type": "password_spray",
+  "severity": "medium",
+  "source_ip": "203.0.113.50",
+  "user_count": 5,
+  "users": [
+    "a.lee@summitcu.example",
+    "j.smith@summitcu.example",
+    "m.garcia@summitcu.example",
+    "r.patel@summitcu.example",
+    "s.williams@summitcu.example"
+  ],
+  "first_seen": "2026-11-03T15:14:00Z",
+  "last_seen": "2026-11-03T15:20:00Z"
+}
+
+--- Successful Login After Failures ---
+{
+  "type": "successful_login_after_failures",
+  "severity": "high",
+  "source_ip": "203.0.113.50",
+  "user": "j.smith@summitcu.example",
+  "timestamp": "2026-11-03T15:21:00Z"
+}
+
+--- External Mail Forwarding ---
+{
+  "type": "external_mail_forwarding",
+  "severity": "high",
+  "source_ip": "203.0.113.50",
+  "user": "j.smith@summitcu.example",
+  "forward_to": "collections@external-mail.example",
+  "timestamp": "2026-11-03T15:27:00Z"
+}
+
+--- Suspicious Inbox Rule ---
+{
+  "type": "suspicious_inbox_rule",
+  "severity": "high",
+  "user": "j.smith@summitcu.example",
+  "source_ip": "203.0.113.50",
+  "condition": "subject_contains: Payment",
+  "timestamp": "2026-11-03T15:31:00Z"
+}
+
+--- Suspicious Payment Email ---
+{
+  "type": "suspicious_payment_email",
+  "severity": "high",
+  "sender": "j.smith@summitcu.example",
+  "recipients": [
+    "finance@summitcu.example",
+    "accounts.payable@summitcu.example"
+  ],
+  "source_ip": "203.0.113.50",
+  "subject": "Updated Payment Instructions",
+  "timestamp": "2026-11-03T15:42:00Z"
+}
+
+========================================================================
+ POSSIBLE LINKED INCIDENTS SCENARIO DETECTED
+========================================================================
+
+[!] Severity:   CRITICAL
+[!] Confidence: HIGH
+[!] Type:       account_takeover_bec
+[!] User:       j.smith@summitcu.example
+[!] Source IP:  203.0.113.50
+[!] Reason:     Password spray followed by successful authentication and external mailbox forwarding.
